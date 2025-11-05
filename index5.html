@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // console.log("a", a); // Error: Cannot access 'a' before initialization
+        let a = 1;
+        // let a = 2; // cannot be re-declared
+
+        // console.log("b", b); // Error: Cannot access 'b' before initialization
+        const b = 1;
+        // const b = 2; // cannot be re-declared
+
+        console.log("c", c); // undefined
+        var c = 1;
+        var c = 2; // can be re-declared.
+
+        // hoistring
+        var c; // declaration - raised it to the top of scope
+        c = 1; // assignment
+
+        // scope
+        // block scope - (...) only visible within the curly bracces. const, let
+        // function scope - function {} const, let, var
+
+        {
+            const xConst = 1;
+            let xLet = 1;
+            var xVar = 1;
+        }
+
+        for (let i = 0; i < 1; i++) {
+            const xConstLoop = 1;
+            let xLetLoop = 1;
+            var xVarLoop = 1;
+        }
+
+        function exampleFunction() {
+            const xConstFunction = 1;
+            let xLetFunction = 1;
+            var xVarFunction = 1;
+        }
+
+        const arrowFunctionExample = () => {
+          const xConstArrowFunction = 1;
+          let xLetArrowFunction = 1;
+          var xVarArrowFunction = 1;  
+        };
+
+        // de-structuring (array, object)
+        const array = [1, true, "zhangsan"];
+        // const x = array[0];
+        // const y = array[1];
+        // const z = array[2];
+        const [x, y, z] = array;
+
+        const laiofferStudentProfile = {
+            name: "ZhangSan",
+            age: 18,
+            home: {
+                state: "CA",
+                streetNumber: "123",
+            },
+        };
+
+        const name = "lisi";
+        const {name: new_name, age} = laiofferStudentProfile;
+
+        console.log("name", name);
+        console.log("new_name", new_name);
+
+        // nested object
+
+        const {
+            home: { state },
+        } = laiofferStudentProfile;
+        // console.log("homw, home"); // Uncaught ReferenceError: home is not defined
+        console.log("state", state); // yes!
+
+        // ...
+        // rest / spread operator
+
+        // default value
+        // rest operator - in a function's signature
+        function fn(a, b = 666, ...args) {
+            console.log("a", a);
+            console.log("b", b);
+            console.log("args", args);
+        }
+
+        fn();
+
+        // spread operator
+        const arr1 = [1, 2, 3];
+        const arr2 = [4, 5, 6];
+
+        const arr3 = [0, ...arr1, ...arr2, 7, 8, 9];
+
+        // shallow clone
+        const xiaohongStudent = {
+            ...laiofferStudentProfile,
+            occupation: "sde",
+            name: "xiao hong",
+        };
+
+        // arrow function
+        const arrowFunction1 = (a, b) => {
+            return a + b;
+        };
+
+        console.log("1 + 2 is", arrowFunction1(1, 2));
+
+        // one line expression
+        const arrowFunction2 = (a, b) => a + b;
+
+        // class
+        class Person {
+            constructor(name, age = 18) {
+                this.name = name;
+                this.age = age;
+                this.occupation = "swe";
+            }
+
+            methodA() {
+                console.log("mathodA() name", this.name);
+            }
+
+            methodB() {
+                console.log("methodB() age", this.age);
+            }
+        }
+
+        const person1 = new Person("xiao zhang", 18);
+        const person2 = new Person("xiao hong", 18);
+
+        person1.methodA();
+
+        person2.methodA();
+
+        class Student extends Person {
+            constructor(name, age, school) {
+                super(name, age);
+                this.school = school;
+            }
+
+            methodC() {
+                console.log("methodC() occupation", this.occupation);
+            }
+        }
+
+        const student1 = new Student("xiao li", 18, "the school");
+        student1.methodA();
+        student1.methodC();
+
+        // tempate string
+        const school_name = "ABC";
+
+        console.log(
+            `Congrats!, you've graduated from $(school_name)! It's a milestone`
+        );
+    </script>
+</body>
+</html>

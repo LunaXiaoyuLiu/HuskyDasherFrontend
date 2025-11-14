@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/react@^16/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.13.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      class Parent extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            balance: 1000,
+            showChild: false,
+          };
+          console.log("constructor() - Parent Component");
+        }
+
+        componentDidMount() {
+          console.log("componentDidMount() 0 Parent Component");
+        }
+
+        componentDidUpdate(prevProps, prevState) {
+          console.log("componentDidUpdate() - Parent Component", {
+            prevProps,
+            prevState,
+          });
+        }
+
+        componentWillUnmount() {
+          console.log("componenetWillUnmount() - Parent Compoenent");
+        }
+
+        render() {
+          console.log("render() - Parent Component");
+          return (
+            <div>
+              <p>Name: {this.props.name}</p>
+              <p>继承者们的故事</p>
+              <p>Parent</p>
+              <p>account balance {this.state.balance}</p>
+
+              <button
+                onClick={() => {
+                  this.setState({
+                    showChild: !this.state.showChild,
+                  });
+                }}
+              >
+                生小宝宝 / 消失掉小宝宝
+              </button>
+
+              <button
+                onClick={() => {
+                  this.setState({
+                    balance: this.state.balance + 100,
+                  });
+                }}
+              >
+                给小宝宝挣奶粉钱
+              </button>
+
+              <br />
+              <br />
+              <br />
+
+              {this.state.showChild ? (
+                <Child balance={this.state.balance} />
+              ) : null}
+            </div>
+          );
+        }
+      }
+
+      class Child extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            balance: 0,
+          };
+          console.log("constructor() - Child Component");
+        }
+
+        componentDidMount() {
+          console.log("componentDidMount() - Child Component");
+        }
+
+        componentDidUpdate(prevProps, prevState) {
+          console.log("componentDidUpdate() - Child Component", {
+            prevProps,
+            prevState,
+          });
+        }
+
+        componentWillUnmount() {
+          console.log("componentWillUnmount() - Child Compoennt");
+        }
+
+        render() {
+          console.log("render() - Child Component");
+          return (
+            <div>
+              <p>Child</p>
+              <p>Parent's account balance: {this.props.balance}</p>
+              <p>自己的小金库 {this.state.balance}</p>
+              <button
+                onClick={() => {
+                  this.setState({
+                    balance: this.state.balance + 100,
+                  });
+                }}
+              >
+                我要存钱
+              </button>
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(
+        <Parent name="zhang san" />,
+        document.getElementById("root")
+      );
+    </script>
+  </body>
+</html>
